@@ -1,6 +1,6 @@
 <?php
 # include DWgramSync
-include __DIR__."/src/sync.php";
+include __DIR__."/src/sync.php"; # change with the actual location of /src/sync.php for your script
 # instantiate DWgramSync
 $dws = new DWgramSync();
 # get last 100 msgs in a chat
