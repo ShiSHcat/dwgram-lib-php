@@ -4,37 +4,25 @@ class DWgramMessages implements JsonSerializable{
     function __construct($messages){
         $this->messages = $messages;
     }
-    function getRawMessages(){
-        return $this->messages;
-    }
-    function getRawMessagesAssoc(){
-        $msgs = [];
-        foreach($this->messages as $k=>$v){
-            $msgs[$v["id"]] = $v;
-        }
-        return $msgs;
-    }
+
     function getMessageByID($id){
         foreach($this->messages as $k=>$v){
             if($v["id"]==$id) return new DWgramMessage($v);
         }
         return NULL;
     }
-    function getAllMessagesAssoc($id){
+
+    function getAllMessages(){
         $msgs = [];
-        foreach($this->messages as $k=>$v){
+        foreach($this->messages as $v){
+            //var_dump($v);
             $msgs[$v["id"]] = new DWgramMessage($v);
         }
+        ksort($msgs);
         return $msgs;
     }
-    function getAllMessagesArray($id){
-        $msgs = [];
-        foreach($this->messages as $k=>$v){
-            $msgs[] = new DWgramMessage($v);
-        }
-        return $msgs;
-    }
+
     function jsonSerialize(){
-        return $this->getRawMessages();
+        return $this->messages;
     }
 }

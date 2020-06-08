@@ -9,7 +9,6 @@ class DWgramSync{
         if(!$this->getStats()->getAPI_online()){
             throw new Exception("DWGram API wrapper: api down");
         }
-        var_dump($this->getUsernameChat("shishcatnews"));
     }
     function POST($url,$body) {
         if($this->using_curl) { //use curl if available
@@ -39,11 +38,10 @@ class DWgramSync{
         $this->throwError($resp);
         return new DWgramStats($resp[1]);
     }
-    function getUsernameChat($username){
-        $resp = $this->POST("https://dwgram.xyz/api/getchat",json_encode(["username"=>$username]));
-        var_dump($resp);
+    function getChat($params){
+        $resp = $this->POST("https://dwgram.xyz/api/getchat",$params);
         $this->throwError($resp);
-        return new DWgramMessages($resp[1]);
+        return new DWgramMessages($resp[1]["messages"]);
     }
     protected function throwError($resp){
         switch($resp[0]){
@@ -58,11 +56,11 @@ class DWgramSync{
                 throw new Exception("DWGram API wrapper: 500 : A generic error happened when processing your request. Please contact @shishcat8214 on telegram for helping us fix this issue.");
                 break;
             case 400:
-                throw new Exception("DWGram API wrapper: 400 : ".$resp[1]["message"]??"no information.");
+                throw new Exception("DWGram API wrapper: 400 : ".($resp[1]["message"]??"no information."));
                 break;
             case 404:
                 throw new Exception("DWGram API wrapper: 404 : Not found. Data requested wasnt available for DWGram API to get it.");
                 break;
         }
     }
-}new DWgramSync();
+}
