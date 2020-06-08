@@ -10,7 +10,7 @@ $msg = $msgs->getMessageByID(2);;
 # let's echo it's contents
 echo $msg->getText();
 # now let's get every message
-$msgs_array = $msgs->getAllMessages(); #ascending order
+$msgs_array = $msgs->getAllMessages(); #key is the ID, ascending order
 #let's iterate over the associative array
 foreach($msgs_array as $k=>$v){
     # if you want to skip medias with no caption use if($v->getText() == "") continue;
